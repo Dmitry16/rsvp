@@ -32,7 +32,17 @@ filterCheckbox.addEventListener('change', (e) => {
 });
 // the event handler for submit event: validates and
 // calls to createLI function which creates and
-// appends a new li element with the info about the invitee
+// appends a new li element with the invitee's info
+window.onload = function() {
+  let arr_invitees = getFromLocalStorage();
+  if(arr_invitees !==[]) {
+    arr_invitees.forEach(function(invitee) {
+      const li = createLI(invitee);
+      ul.appendChild(li);
+    });
+  }
+}
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = input.value;
@@ -54,8 +64,22 @@ function validateInput(submittedText) {
 }
 
 function setToLocalStorage(submittedText) {
-  let id = 0;
-  localStorage.setItem(id, submittedText)
+  let invitees = getFromLocalStorage();
+  if(!submittedText || invitees.indexOf(submittedText)>-1) {
+    return false;
+  }
+  invitees.push(submittedText);
+  localStorage.setItem('invitees', JSON.stringify(invitees));
+  return true;
+}
+
+function getFromLocalStorage() {
+  let invitees = localStorage.getItem("invitees");
+  if (invitees) {
+    return JSON.parse(invitees);
+  } else {
+    return [];
+  }
 }
 
 function createLI(text) {
