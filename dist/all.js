@@ -26,6 +26,7 @@ window.onload = function() {
 // the event handler for the checkbox which filters
 // (showing or hiding) the invitees who confirmed or not
 !function() {
+
   filterCheckbox.addEventListener('change', (e) => {
     const isChecked = e.target.checked;
     let arr_li = ul.children;
@@ -41,11 +42,9 @@ window.onload = function() {
       }
     }
   });
-}();
 // the event handler for submit event: validates and
 // calls to createLI function which creates and
 // appends a new li element with the invitee's info
-!function() {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = input.value;
@@ -57,22 +56,22 @@ window.onload = function() {
       ul.appendChild(li);
     }
   });
-}();
 // the event handler for checking and unchecking a particular
 // invitee weather it confirmed or not
-!function() {
-ul.addEventListener('change', (e) => {
 
-  const checkbox = e.target;
-  const checked = checkbox.checked;
-  const listItem = checkbox.parentNode.parentNode;
+  ul.addEventListener('change', (e) => {
 
-  if(checked) {
-    listItem.className = 'responded';
-  } else {
-    listItem.className = '';
-  }
-});
+    const checkbox = e.target;
+    const checked = checkbox.checked;
+    const listItem = checkbox.parentNode.parentNode;
+
+    if(checked) {
+      listItem.className = 'responded';
+    } else {
+      listItem.className = '';
+    }
+  });
+
 }();
 
 !function() {
