@@ -1,5 +1,5 @@
 var gulp      	= require('gulp'),
-		sass        = require('gulp-sass'),
+		//sass        = require('gulp-sass'),
 		browserSync = require('browser-sync'),
 		concat			= require('gulp-concat'),
 		minifyCSS   = require('gulp-minify-css'),
@@ -18,9 +18,9 @@ var gulp      	= require('gulp'),
 		//bourbon			= require('node-bourbon').includePaths,
     //neat 				= require('node-neat').includePaths;
 
-var paths = {
-    scss: 'app/sass/**/*.scss'
-};
+// var paths = {
+//     scss: 'app/sass/**/*.scss'
+// };
 
 // gulp.task('bourbon', function () {
 //     return gulp.src(paths.scss)
@@ -64,8 +64,18 @@ var paths = {
 // 		.pipe(gulp.dest('app/css'))
 // 		.pipe(browserSync.reload({stream: true}));
 // });
+gulp.task('clean', function() {
+  return gulp.src('dist/', {read: false})
+    .pipe(clean());
+});
 
-gulp.task('browser-sync', function() {
+gulp.task('concat_js', ['clean'], function() {
+	return gulp.src('js/*.js')
+	.pipe(concat('all.js'))
+	.pipe(gulp.dest('dist/'))
+})
+
+gulp.task('browser-sync', ['concat_js'], function() {
 
 	return browserSync({
 		server: {
