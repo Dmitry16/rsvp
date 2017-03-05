@@ -57,7 +57,6 @@ form.addEventListener('submit', (e) => {
 
 function validateInput(submittedText) {
   if(submittedText !=="") {
-    alert("kuku!");
     setToLocalStorage(submittedText);
     return true;
   }
@@ -79,6 +78,15 @@ function getFromLocalStorage() {
     return JSON.parse(invitees);
   } else {
     return [];
+  }
+}
+
+function removeFromLocalStorage(invitee) {
+  let invitees = getFromLocalStorage("invitees");
+  let inviteeIndex = invitees.indexOf(invitee);
+  if ( inviteeIndex !== -1) {
+    invitees.splice(inviteeIndex, 1);
+    localStorage.setItem('invitees', JSON.stringify(invitees));
   }
 }
 
@@ -126,10 +134,13 @@ ul.addEventListener('click', (e) => {
   if (e.target.tagName === 'BUTTON') {
     const button = e.target;
     const li = button.parentNode;
+    const span = li.firstElementChild;
+    const invitee = span.textContent;
     const ul = li.parentNode;
     const action = button.textContent;
     const nameActions = {
       delete: () => {
+        removeFromLocalStorage(invitee);
         ul.removeChild(li);
       },
       edit: () => {
